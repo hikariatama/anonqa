@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebApp</title>
+  <script src="/static/js/telegram-web-app.min.js"></script>
+  <script src="/static/js/tgs-player.min.js" async></script>
+  <link rel="stylesheet" href="/static/css/shared.css" />
+</head>
+
+<body>
+  <div id="blurrer"></div>
+  <span id="header">
+    <tgs-player autoplay loop mode="normal" src="/static/img/tgs/emailbox.tgs" id="tgs--main"></tgs-player>
+    <span class="title">Send an anonymous message</span>
+  </span>
+  <form action="#" method="POST" autocomplete="">
+    <div class="block extended message-block">
+      <div class="flex">
+        <img src="https://img.icons8.com/fluency/100/chat-message.png" alt="time" class="block-icon" />
+        Your message
+      </div>
+      <textarea name="message" id="message" cols="30" rows="7" autocomplete=""></textarea>
+    </div>
+    </div>
+    <input type="submit" value="Send" disabled="disabled" />
+  </form>
+  <div class="modal-darkener"></div>
+  <div class="modal">
+    <div class="modal-close">&times;</div>
+    <tgs-player autoplay loop mode="normal" id="modal-tgs-player"></tgs-player>
+    <div class="modal-title"></div>
+    <div class="modal-content"></div>
+    <input type="text" class="modal-input" />
+    <input type="button" class="modal-button" />
+  </div>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LcJrDkpAAAAAJ5PanLaBwmsEFcwwIzcGYS8OejR"></script>
+  <script src="/static/js/shared.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,13 @@
+[main]
+token = "<token>"
+admins = [000000000]
+owner_id = 000000000
+throttling_rate = 0.5
+default_ratelimit = "60/minute"
+secret = "0000000000000000000000000000000000000000000000000000000000000000"  # Hex with random bytes
+local_api_endpoint = "https://example.com"
+postgres_uri = "postgresql://postgres:postgres@anonqa-postgres:5432/postgres"
+recaptcha_site_key = "<site_key>"
+dev = false
+prime_a = 0  # Big random prime (4096 bit)
+prime_b = 0  # Big random prime (4096 bit)

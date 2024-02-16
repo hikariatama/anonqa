@@ -1,0 +1,54 @@
+---
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./web.Dockerfile
+    working_dir: /usr/src/anonqa-bot
+    stop_signal: SIGINT
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://0.0.0.0:8000/ping"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "7895:8000"
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://${LOKI_HOST:-127.0.0.1:3100}/loki/api/v1/push"
+  bot:
+    build:
+      context: .
+      dockerfile: ./bot.Dockerfile
+    working_dir: /usr/src/anonqa-bot
+    stop_signal: SIGINT
+    restart: unless-stopped
+    depends_on:
+      server:
+        condition: service_healthy
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://${LOKI_HOST:-127.0.0.1:3100}/loki/api/v1/push"
+  postgres:
+    image: postgres:13.3-alpine
+    hostname: anonqa-postgres
+    volumes:
+      - anonqa-postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, pg_isready, -U, postgres]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  anonqa-postgres-data:
